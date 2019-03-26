@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Created by Priyam March 15, 2019 -->
+  
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+     <context:annotation-config/>
+  	<context:component-scan base-package="org.priyam.sample"></context:component-scan>
+   <bean id="line" class="org.priyam.sample.Line">
+   </bean>  
+	<bean id="circle" class="org.priyam.sample.Circle">
+		<property name="center" ref="pointC"></property>
+	</bean>
+   
+	<bean id="triangle" class="org.priyam.sample.Triangle">
+		<property name="points">
+			<list>
+				<ref bean="pointA"></ref>
+				<ref bean="pointB"></ref>
+				<ref bean="pointD"></ref>
+			</list>
+		</property>
+	</bean>
+	<bean id="parent-square" class="org.priyam.sample.Square">
+		<property name="pointA" ref="pointA"></property>
+	</bean>
+	
+	<bean id="square" class="org.priyam.sample.Square" parent="parent-square">
+		<property name="pointB" ref="pointB"></property>
+		<property name="pointC" ref="pointC"></property>
+		<property name="pointD" ref="pointD"></property>
+	</bean>  
+	
+	<bean id="square1" class="org.priyam.sample.Square" parent="parent-square" init-method="myBeanInitialization" destroy-method="myBeanDestroy">
+		<property name="pointD" ref="pointD"></property>
+		<property name="pointB" ref="pointB"></property>
+		<property name="pointC" ref="pointC"></property>
+	</bean>
+	
+	<bean id="square2" class="org.priyam.sample.Square" autowire="byName"></bean>   
+	
+	<!-- <bean id="p1" class="org.priyam.sample.Point">
+		<property name="x" value="-20"></property>
+		<property name="y" value="-20"></property>
+	</bean>
+	
+	<bean id="p2" class="org.priyam.sample.Point">
+		<property name="x" value="50"></property>
+		<property name="y" value="50"></property>
+	</bean> -->
+	
+	<bean id="pointA" class="org.priyam.sample.Point">
+		<property name="x" value="0"></property>
+		<property name="y" value="0"></property>
+	</bean>
+	
+	<bean id="pointB" class="org.priyam.sample.Point">
+		<property name="x" value="0"></property>
+		<property name="y" value="20"></property>
+	</bean>
+	
+	<bean id="pointC" class="org.priyam.sample.Point">
+		<property name="x" value="20"></property>
+		<property name="y" value="20"></property>
+	</bean>
+	
+	<bean id="pointD" class="org.priyam.sample.Point">
+		<property name="x" value="20"></property>
+		<property name="y" value="0"></property>
+	</bean>
+	<bean id="pointE" class="org.priyam.sample.Point">
+		<qualifier value="linePt1"></qualifier>
+		<property name="x" value="-20"></property>
+		<property name="y" value="-20"></property>
+	</bean>
+	<bean id="pointF" class="org.priyam.sample.Point">
+		<qualifier value="linePt2"></qualifier>
+		<property name="x" value="50"></property>
+		<property name="y" value="50"></property>
+	</bean>
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>mymessages</value>
+			</list>
+		</property>
+	</bean>
+	
+</beans>
